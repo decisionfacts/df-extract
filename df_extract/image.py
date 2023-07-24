@@ -1,6 +1,6 @@
 from typing import Any
 
-from df_lib.utils import sync_to_async
+from utils import sync_to_async
 from easyocr import easyocr
 
 
