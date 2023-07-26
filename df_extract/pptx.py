@@ -4,8 +4,8 @@ import aiofiles
 from pptx import Presentation
 from pptx.enum.shapes import MSO_SHAPE_TYPE
 
-from base import BaseExtract
-from utils import iter_to_aiter, sync_to_async
+from df_extract.base import BaseExtract
+from df_extract.utils import iter_to_aiter, sync_to_async
 
 
 class ExtractPPTx(BaseExtract):

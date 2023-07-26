@@ -5,7 +5,7 @@ import fitz
 from fitz import Document
 
 from df_extract.base import BaseExtract
-from utils import iter_to_aiter, sync_to_async
+from df_extract.utils import iter_to_aiter, sync_to_async
 
 
 class ExtractPDF(BaseExtract):

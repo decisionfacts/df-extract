@@ -1,7 +1,8 @@
 from typing import Any
 
-from utils import sync_to_async
 from easyocr import easyocr
+
+from df_extract.utils import sync_to_async
 
 
 class ExtractImage:
