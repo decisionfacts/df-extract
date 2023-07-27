@@ -9,13 +9,18 @@ class BaseExtract(abc.ABC):
     def __init__(
             self,
             file_path: str,
+            output_dir: str = None,
             img_extract_obj: ExtractImage | None = None,
     ):
         self.file_path = file_path
         self.name = self.file_path.split('/')[-1]
         self._image_extract = img_extract_obj
-        self._output = f'{self.file_path}.txt'
-        self._output_json = f'{self.file_path}.json'
+        self.output_dir = output_dir
+        if not self.output_dir:
+            self.output_dir = '/'.join(self.file_path.split('/')[:-1])
+
+        self._output = f'{self.output_dir}/{self.name}.txt'
+        self._output_json = f'{self.output_dir}/{self.name}.json'
 
     async def remove_existing_output(self) -> None:
         if os.path.exists(self._output):
