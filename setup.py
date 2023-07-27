@@ -21,9 +21,10 @@ setup(
     packages=find_packages(exclude=('dhl',)),
     include_package_data=True,
     install_requires=[
-        'python-pptx',
         'aiofiles',
         'aiopath',
+        'aiocsv',
+        'python-pptx',
         'python-docx',
         'easyocr',
         'pymupdf'
