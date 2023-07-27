@@ -7,11 +7,16 @@ from df_extract.utils import sync_to_async
 
 class ExtractImage:
 
-    def __init__(self, model_storage_dir: str, lang_list: list[str] | None = None):
+    def __init__(
+            self,
+            model_download_enabled: bool = False,
+            model_storage_dir: str = None,
+            lang_list: list[str] | None = None
+    ):
         self._reader = easyocr.Reader(
             lang_list or ['en'],
-            gpu=False,
-            download_enabled=False,
+            # gpu=False,
+            download_enabled=model_download_enabled,
             model_storage_directory=model_storage_dir,
         )
 
