@@ -7,6 +7,8 @@ class Base:
             self,
             file_path: str,
             output_dir: str = None,
+            *args,
+            **kwargs
     ):
         self.file_path = file_path
         self.name = self.file_path.split('/')[-1]
