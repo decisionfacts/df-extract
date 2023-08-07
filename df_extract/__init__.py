@@ -5,7 +5,7 @@ class Base:
 
     def __init__(
             self,
-            file_path: str,
+            file_path: str = None,
             output_dir: str = None,
     ):
         self.file_path = file_path
