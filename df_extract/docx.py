@@ -36,8 +36,9 @@ class ExtractDocx(BaseExtract):
 
     async def extract(self, as_json: bool = False) -> None:
         print(f'Extracting => {self.file_path}')
+        doc = Document(self.file_path)
         if not as_json:
-            await self.extract_as_text()
+            await self.extract_as_text(doc)
         else:
-            await self.extract_as_json()
+            await self.extract_as_json(doc)
         print(f'Extracted => {self.file_path}')
