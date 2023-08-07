@@ -1,10 +1,7 @@
-import json
-
-import aiofiles
 from docx import Document
 
 from df_extract.base import BaseExtract
-from df_extract.utils import iter_to_aiter, sync_to_async
+from df_extract.utils import iter_to_aiter
 
 
 class ExtractDocx(BaseExtract):
@@ -15,8 +12,7 @@ class ExtractDocx(BaseExtract):
         async for para in iter_to_aiter(doc.paragraphs):
             text += para.text + '\n\n\n\n'
 
-        async with aiofiles.open(self._output, 'w') as fobj:
-            await fobj.write(text)
+        await self._write_text_output(text=text)
 
     async def extract_as_json(self, doc: Document):
         await self.remove_existing_json_output()
@@ -31,8 +27,7 @@ class ExtractDocx(BaseExtract):
             data.append(para_content)
             _para_count += 1
 
-        async with aiofiles.open(self._output_json, 'w') as fobj:
-            await fobj.write(await sync_to_async(json.dumps, data, indent=4))
+        await self._write_json_output(data=data)
 
     async def extract(self, as_json: bool = False) -> None:
         print(f'Extracting => {self.file_path}')

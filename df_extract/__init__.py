@@ -1,4 +1,9 @@
+import json
 import os
+
+import aiofiles
+
+from df_extract.utils import sync_to_async
 
 
 class Base:
@@ -26,3 +31,11 @@ class Base:
     async def remove_existing_json_output(self) -> None:
         if os.path.exists(self._output_json):
             os.remove(self._output_json)
+
+    async def _write_text_output(self, text):
+        async with aiofiles.open(self._output, 'w') as fobj:
+            await fobj.write(text)
+
+    async def _write_json_output(self, data):
+        async with aiofiles.open(self._output_json, 'w') as fobj:
+            await fobj.write(await sync_to_async(json.dumps, data, indent=4))

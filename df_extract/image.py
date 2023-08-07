@@ -1,9 +1,5 @@
-import json
-
-import aiofiles
-
 from df_extract.base import BaseExtract
-from df_extract.utils import sync_to_async, iter_to_aiter
+from df_extract.utils import iter_to_aiter
 
 
 class ExtractImage(BaseExtract):
@@ -15,15 +11,13 @@ class ExtractImage(BaseExtract):
         async for row in iter_to_aiter(data):
             text += row + "\n\n\n\n"
 
-        async with aiofiles.open(self._output_json, 'w') as fobj:
-            await fobj.write(text)
+        await self._write_text_output(text=text)
 
     async def extract_as_json(self):
         await self.remove_existing_json_output()
         data = await self._image_extract.read(path=self.file_path)
 
-        async with aiofiles.open(self._output_json, 'w') as fobj:
-            await fobj.write(await sync_to_async(json.dumps, data, indent=4))
+        await self._write_json_output(data=data)
 
     async def extract(self, as_json: bool = False):
         print(f'Extracting => {self.file_path}')

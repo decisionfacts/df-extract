@@ -1,6 +1,5 @@
 import json
 
-import aiofiles
 import fitz
 from fitz import Document
 
@@ -61,8 +60,7 @@ class ExtractPDF(BaseExtract):
                 text += await self._extract_page_as_image(page)
                 text += "\n\n\n\n"
 
-        async with aiofiles.open(self._output, 'w') as fobj:
-            await fobj.write(text)
+        await self._write_text_output(text=text)
 
     async def extract_as_json(self, doc: Document):
         await self.remove_existing_json_output()
@@ -89,8 +87,7 @@ class ExtractPDF(BaseExtract):
                 }
                 data.append(page_content)
 
-        async with aiofiles.open(self._output_json, 'w') as fobj:
-            await fobj.write(await sync_to_async(json.dumps, data, indent=4))
+        await self._write_json_output(data=data)
 
     async def extract(self, as_json: bool = False, convert_as_image: bool = False) -> None:
         self._convert_as_image = convert_as_image

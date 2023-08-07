@@ -15,8 +15,7 @@ class ExtractCSV(BaseExtract):
         async for row in AsyncReader(csv_fobj):
             text = ''.join(row) + "\n"
 
-        async with aiofiles.open(self._output, 'w') as fobj:
-            await fobj.write(text)
+        await self._write_text_output(text=text)
 
     async def extract_as_json(self, csv_fobj):
         data = []
@@ -29,8 +28,7 @@ class ExtractCSV(BaseExtract):
             })
             _row += 1
 
-        async with aiofiles.open(self._output_json, 'w') as fobj:
-            await fobj.write(await sync_to_async(json.dumps, data, indent=4))
+        await self._write_json_output(data=data)
 
     async def extract(
             self, as_json: bool = False
