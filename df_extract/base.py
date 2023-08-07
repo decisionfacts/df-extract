@@ -1,38 +1,23 @@
 import abc
-import os
 
+from df_extract import Base
 from df_extract.image import ExtractImage
 
 
-class BaseExtract(abc.ABC):
+class BaseExtract(abc.ABC, Base):
 
     def __init__(
             self,
-            file_path: str,
-            output_dir: str = None,
             img_extract_obj: ExtractImage | None = None,
+            *args,
+            **kwargs
     ):
-        self.file_path = file_path
-        self.name = self.file_path.split('/')[-1]
+        super().__init__(*args, **kwargs)
         self._image_extract = img_extract_obj
-        self.output_dir = output_dir
-        if not self.output_dir:
-            self.output_dir = '/'.join(self.file_path.split('/')[:-1])
-
-        self._output = f'{self.output_dir}/{self.name}.txt'
-        self._output_json = f'{self.output_dir}/{self.name}.json'
-
-    async def remove_existing_output(self) -> None:
-        if os.path.exists(self._output):
-            os.remove(self._output)
-
-    async def remove_existing_json_output(self) -> None:
-        if os.path.exists(self._output_json):
-            os.remove(self._output_json)
 
     async def extract_image(self, image) -> str:
         if self._image_extract:
-            image_data = await self._image_extract.extract(path=image)
+            image_data = await self._image_extract.read(path=image)
             return " ".join(image_data)
 
     @abc.abstractmethod

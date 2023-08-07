@@ -65,7 +65,7 @@ class ExtractPDF(BaseExtract):
             await fobj.write(text)
 
     async def extract_as_json(self, doc: Document):
-        await self.remove_existing_output()
+        await self.remove_existing_json_output()
         data = []
         apages = iter_to_aiter(doc)
         if not self._convert_as_image:
