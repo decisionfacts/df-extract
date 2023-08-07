@@ -5,10 +5,11 @@ import aiofiles
 from easyocr import easyocr
 
 from df_extract import Base
+from df_extract.base import BaseExtract
 from df_extract.utils import sync_to_async, iter_to_aiter
 
 
-class ExtractImage(Base):
+class ImageExtract:
 
     def __init__(
             self,
@@ -41,6 +42,9 @@ class ExtractImage(Base):
         except Exception as ex:
             print(ex)
             return []
+
+
+class ExtractImage(BaseExtract):
 
     async def extract_as_text(self):
         await self.remove_existing_output()

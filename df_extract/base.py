@@ -1,14 +1,14 @@
 import abc
 
 from df_extract import Base
-from df_extract.image import ExtractImage
+from df_extract.image import ImageExtract
 
 
 class BaseExtract(abc.ABC, Base):
 
     def __init__(
             self,
-            img_extract_obj: ExtractImage | None = None,
+            img_extract_obj: ImageExtract | None = None,
             *args,
             **kwargs
     ):
