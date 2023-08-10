@@ -27,6 +27,7 @@ setup(
         'python-pptx',
         'python-docx',
         'easyocr',
-        'pymupdf'
+        'pymupdf',
+        'Pillow==9.5.0'
     ]
 )
