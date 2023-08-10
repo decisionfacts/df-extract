@@ -15,7 +15,12 @@ class ExtractImage(BaseExtract):
 
     async def extract_as_json(self):
         await self.remove_existing_json_output()
-        data = await self._image_extract.read(path=self.file_path)
+        page_data = await self._image_extract.read(path=self.file_path)
+        data = [{
+            'number': 1,
+            'content': page_data,
+            'name': self.name
+        }]
 
         await self._write_json_output(data=data)
 
