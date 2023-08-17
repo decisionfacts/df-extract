@@ -34,7 +34,8 @@ class ExtractPPTx(BaseExtract):
             _g_text = ""
             async for _shape in iter_to_aiter(shape.shapes):
                 _g_text += await self._extract_shape(_shape)
-            text += _g_text
+            if _g_text:
+                text += _g_text + "\n\n"
         elif _shape_type == MSO_SHAPE_TYPE.PICTURE:
             if self._image_extract:
                 try:
@@ -47,7 +48,8 @@ class ExtractPPTx(BaseExtract):
             pass
         elif _shape_type == MSO_SHAPE_TYPE.TABLE:
             table_data = await self.__extract_table(shape.table)
-            text += json.dumps(table_data) + "\n\n"
+            if table_data:
+                text += json.dumps(table_data) + "\n\n"
         else:
             if shape.has_text_frame:
                 # print("Shap Type => ", _shape.shape_type)
@@ -57,7 +59,9 @@ class ExtractPPTx(BaseExtract):
                 # print(paragraph)
                 # paragraph = await self.extract_text(_shape.text_frame)
                 # text += paragraph + "\n\n"
-                text += shape.text + "\n\n"
+                _text = shape.text
+                if _text:
+                    text += _text + "\n\n"
         return text
 
     async def _extract_shapes(self, shapes):
