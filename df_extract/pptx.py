@@ -4,6 +4,7 @@ from pptx import Presentation
 from pptx.enum.shapes import MSO_SHAPE_TYPE
 
 from df_extract.base import BaseExtract
+from df_extract.extract_util import cleanup
 from df_extract.utils import iter_to_aiter
 
 
@@ -75,7 +76,8 @@ class ExtractPPTx(BaseExtract):
             if _shape.has_table:
                 pass
             shapes_data += await self._extract_shape(_shape)
-        return shapes_data
+        cleaned_up_data = await cleanup(shapes_data)
+        return cleaned_up_data
 
     async def extract_as_text(self, presentation):
         await self.remove_existing_output()
@@ -100,7 +102,6 @@ class ExtractPPTx(BaseExtract):
             data.append(page_content)
             slide_no += 1
 
-        # print(data)
         await self._write_json_output(data=data)
 
     async def extract(self, as_json: bool = False, save_output: bool = False):

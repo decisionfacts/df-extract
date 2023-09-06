@@ -1,6 +1,7 @@
 from docx import Document
 
 from df_extract.base import BaseExtract
+from df_extract.extract_util import cleanup
 from df_extract.utils import iter_to_aiter
 
 
@@ -10,7 +11,8 @@ class ExtractDocx(BaseExtract):
         await self.remove_existing_output()
         text = ''
         async for para in iter_to_aiter(doc.paragraphs):
-            text += para.text + '\n\n\n\n'
+            cleaned_up_data = await cleanup(para.text)
+            text += cleaned_up_data + '\n\n\n\n'
 
         await self._write_text_output(text=text)
 
@@ -21,7 +23,7 @@ class ExtractDocx(BaseExtract):
         async for para in iter_to_aiter(doc.paragraphs):
             para_content = {
                 'number': _para_count,
-                'content': para.text,
+                'content': await cleanup(para.text),
                 'name': self.name
             }
             data.append(para_content)

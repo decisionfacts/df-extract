@@ -1,4 +1,5 @@
 from df_extract.base import BaseExtract
+from df_extract.extract_util import cleanup
 from df_extract.utils import iter_to_aiter
 
 
@@ -10,15 +11,16 @@ class ExtractImage(BaseExtract):
         text = ''
         async for row in iter_to_aiter(data):
             text += row + "\n\n\n\n"
-
-        await self._write_text_output(text=text)
+        cleaned_up_data = await cleanup(text)
+        await self._write_text_output(text=cleaned_up_data)
 
     async def extract_as_json(self):
         await self.remove_existing_json_output()
         page_data = await self._image_extract.read(path=self.file_path)
+        cleaned_up_data = await cleanup(page_data)
         data = [{
             'number': 1,
-            'content': page_data,
+            'content': cleaned_up_data,
             'name': self.name
         }]
 

@@ -4,6 +4,7 @@ import fitz
 from fitz import Document
 
 from df_extract.base import BaseExtract
+from df_extract.extract_util import cleanup
 from df_extract.utils import iter_to_aiter, sync_to_async
 
 
@@ -31,7 +32,8 @@ class ExtractPDF(BaseExtract):
         page_data = page.get_text()
         _images = page.get_images()
         page_data += await self._extract_images(_images, doc)
-        return page_data
+        cleaned_up_data = await cleanup(page_data)
+        return cleaned_up_data
 
     async def _extract_page_as_image(
             self,
@@ -45,7 +47,8 @@ class ExtractPDF(BaseExtract):
         _result = await self.extract_image(_pix_map.tobytes(output='jpg'))
         if _result:
             page_data += '\n'.join(_result)
-        return page_data
+        cleaned_up_data = await cleanup(page_data)
+        return cleaned_up_data
 
     async def extract_as_text(self, doc: Document):
         await self.remove_existing_output()
