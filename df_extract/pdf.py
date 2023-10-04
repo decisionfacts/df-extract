@@ -70,9 +70,8 @@ class ExtractPDF(BaseExtract):
         data = []
         apages = iter_to_aiter(doc)
         if not self._convert_as_image:
-            page_data = ''
             async for page in apages:
-                page_data += await self._extract_page_data(page, doc)
+                page_data = await self._extract_page_data(page, doc)
                 page_content = {
                     'number': page.number + 1,
                     'content': page_data,
@@ -81,8 +80,7 @@ class ExtractPDF(BaseExtract):
                 data.append(page_content)
         else:
             async for page in apages:
-                page_data = ''
-                page_data += await self._extract_page_as_image(page)
+                page_data = await self._extract_page_as_image(page)
                 page_content = {
                     'number': page.number + 1,
                     'content': page_data,
