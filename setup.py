@@ -17,7 +17,7 @@ DecisionFacts Extraction Library extracts content from PDF, PPTX, Docx, png, jpg
 
 setup(
     name='df_extract',
-    version='v0.0.1',
+    version='v0.0.2',
     description=_description,
     long_description=readme(),
     long_description_content_type='text/markdown',
