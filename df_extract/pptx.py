@@ -104,7 +104,7 @@ class ExtractPPTx(BaseExtract):
 
         await self._write_json_output(data=data)
 
-    async def extract(self, as_json: bool = False, save_output: bool = False):
+    async def extract(self, as_json: bool = False):
         print(f'Extracting => {self.file_path}')
         presentation = Presentation(pptx=self.file_path)
         if not as_json:

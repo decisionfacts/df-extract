@@ -12,7 +12,7 @@ def readme():
 
 setup(
     name='df_extract',
-    version='0.0.1',
+    version='v0.0.1',
     description='Utils for decisionforce extract',
     long_description=readme(),
     author='DecisionForce',
