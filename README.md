@@ -1,4 +1,7 @@
+
 # DF Extract Lib
+
+[![Upload Python Package](https://github.com/decisionfacts/df-extract/actions/workflows/python-publish.yml/badge.svg)](https://github.com/decisionfacts/df-extract/actions/workflows/python-publish.yml)
 
 ## Requirements
 
