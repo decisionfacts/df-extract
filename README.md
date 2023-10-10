@@ -1,7 +1,7 @@
 
 # DF Extract Lib
 
-[![Upload Python Package](https://github.com/decisionfacts/df-extract/actions/workflows/python-publish.yml/badge.svg)](https://github.com/decisionfacts/df-extract/actions/workflows/python-publish.yml)
+[![PyPI version](https://badge.fury.io/py/df-extract.svg)](https://badge.fury.io/py/df-extract) [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
 ## Requirements
 
@@ -10,6 +10,10 @@ Python 3.10+
 ## Installation
 
 ```shell
+# Using pip
+$ python -m pip install df-extract
+
+# Manual install
 $ python -m pip install .
 ```
 
