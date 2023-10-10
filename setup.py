@@ -15,6 +15,7 @@ setup(
     version='v0.0.1',
     description='Utils for decisionforce extract',
     long_description=readme(),
+    long_description_content_type='text/markdown',
     author='DecisionForce',
     author_email='info@decisionforce.io',
     license='MIT',
