@@ -14,28 +14,64 @@ ASCII_REGEX = re.compile(r'[^\x00-\x7f]+')
 
 
 async def read_data(path: AsyncPath) -> list | dict:
+    """
+    Utility function to read file
+
+    :param path: Valid `AsyncPath` object
+    :return: `list` or `dict`
+    """
     async with path.open(mode='r') as fobj:
         f_data = await fobj.read()
         return await sync_to_async(json.loads, f_data)
 
 
 async def cleanup_spaces(content: str) -> str:
+    """
+    Utility function to clean spaces in the given content
+
+    :param content: Valid content as string
+    :return: `str`
+    """
     return SPACE_REGEX.sub("  ", content)
 
 
 async def cleanup_multi_line(content: str) -> str:
+    """
+    Utility function to clean multi lines in the given content
+
+    :param content: Valid content as string
+    :return: `str`
+    """
     return MULTI_LINE_REGEX.sub("\n\n", content)
 
 
 async def cleanup_double_quotes(content: str) -> str:
+    """
+    Utility function to clean double quotes in the given content
+
+    :param content: Valid content as string
+    :return: `str`
+    """
     return DOUBLE_QUOTES_REGEX.sub("'", content)
 
 
 async def cleanup_ascii(content: str) -> str:
+    """
+    Utility function to clean ascii chars in the given content
+
+    :param content: Valid content as string
+    :return: `str`
+    """
     return ASCII_REGEX.sub("", content)
 
 
 async def cleanup(content: str) -> str:
+    """
+    Utility function to clean the given content
+
+    :param content: Valid content as string
+    :return: `str`
+    """
     content = content.encode().decode('unicode_escape')
     res = await cleanup_spaces(content)
     res = await cleanup_multi_line(res)
@@ -45,6 +81,12 @@ async def cleanup(content: str) -> str:
 
 
 async def cleanup_from_file(file_path: str, output_dir: str | None = None):
+    """
+    Utility function to clean the given file
+
+    :param file_path: Valid file path as string
+    :param output_dir: Valid directory path as string. Default `None`
+    """
     path = AsyncPath(file_path)
     data = await read_data(path)
     async for item in iter_to_aiter(data):

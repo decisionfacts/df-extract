@@ -6,8 +6,16 @@ from df_extract.utils import iter_to_aiter
 
 
 class ExtractDocx(BaseExtract):
+    """
+    Class for Docx or Doc Extraction
+    """
 
     async def extract_as_text(self, doc: Document):
+        """
+        Method to extract docx or doc content as text
+
+        :param doc: Valid `docx.Document` object
+        """
         await self.remove_existing_output()
         text = ''
         async for para in iter_to_aiter(doc.paragraphs):
@@ -17,6 +25,11 @@ class ExtractDocx(BaseExtract):
         await self._write_text_output(text=text)
 
     async def extract_as_json(self, doc: Document):
+        """
+        Method to extract docx or doc content as json
+
+        :param doc: Valid `docx.Document` object
+        """
         await self.remove_existing_json_output()
         data = []
         _para_count = 1
@@ -32,6 +45,11 @@ class ExtractDocx(BaseExtract):
         await self._write_json_output(data=data)
 
     async def extract(self, as_json: bool = False) -> None:
+        """
+        Method to extract csv content
+
+        :param as_json: Extracted content will be stored as json. Default `False`
+        """
         print(f'Extracting => {self.file_path}')
         doc = Document(self.file_path)
         if not as_json:

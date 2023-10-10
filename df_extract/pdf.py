@@ -9,8 +9,17 @@ from df_extract.utils import iter_to_aiter, sync_to_async
 
 
 class ExtractPDF(BaseExtract):
+    """
+    Class for PDF Extraction
+    """
 
     def __init__(self, *args, **kwargs):
+        """
+        PDF Extract class constructor
+
+        :param args: Base class arguments
+        :param kwargs: Base class keyword arguments
+        """
         super().__init__(*args, **kwargs)
         self._convert_as_image: bool = False
 
@@ -51,6 +60,11 @@ class ExtractPDF(BaseExtract):
         return cleaned_up_data
 
     async def extract_as_text(self, doc: Document):
+        """
+        Method to extract PDF content as text
+
+        :param doc: Valid `fitz.Document` object
+        """
         await self.remove_existing_output()
         text = ""
         apages = iter_to_aiter(doc)
@@ -66,6 +80,11 @@ class ExtractPDF(BaseExtract):
         await self._write_text_output(text=text)
 
     async def extract_as_json(self, doc: Document):
+        """
+        Method to extract PDF content as json
+
+        :param doc: Valid `fitz.Document` object
+        """
         await self.remove_existing_json_output()
         data = []
         apages = iter_to_aiter(doc)
@@ -91,6 +110,12 @@ class ExtractPDF(BaseExtract):
         await self._write_json_output(data=data)
 
     async def extract(self, as_json: bool = False, convert_as_image: bool = False) -> None:
+        """
+        Method to extract PDF content
+
+        :param as_json: Extracted content will be stored as json. Default `False`
+        :param convert_as_image: Special option to convert PDF page as image and extract. Default `False`
+        """
         self._convert_as_image = convert_as_image
         print(f'Extracting => {self.file_path}')
         with fitz.Document(self.file_path) as doc:

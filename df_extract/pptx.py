@@ -9,6 +9,9 @@ from df_extract.utils import iter_to_aiter
 
 
 class ExtractPPTx(BaseExtract):
+    """
+    Class for PPTX or PPT Extraction
+    """
 
     @staticmethod
     async def __extract_table(table):
@@ -80,6 +83,11 @@ class ExtractPPTx(BaseExtract):
         return cleaned_up_data
 
     async def extract_as_text(self, presentation):
+        """
+        Method to extract pptx or ppt content as text
+
+        :param presentation: Valid `pptx.Presentation` object
+        """
         await self.remove_existing_output()
         text = ""
         async for _slide in iter_to_aiter(presentation.slides):
@@ -89,6 +97,11 @@ class ExtractPPTx(BaseExtract):
         await self._write_text_output(text=text)
 
     async def extract_as_json(self, presentation):
+        """
+        Method to extract pptx or ppt content as json
+
+        :param presentation: Valid `pptx.Presentation` object
+        """
         await self.remove_existing_json_output()
         data = []
         slide_no = 1
@@ -105,6 +118,11 @@ class ExtractPPTx(BaseExtract):
         await self._write_json_output(data=data)
 
     async def extract(self, as_json: bool = False):
+        """
+        Method to extract csv content
+
+        :param as_json: Extracted content will be stored as json. Default `False`
+        """
         print(f'Extracting => {self.file_path}')
         presentation = Presentation(pptx=self.file_path)
         if not as_json:
