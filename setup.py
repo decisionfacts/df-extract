@@ -36,7 +36,7 @@ setup(
         'aiofiles==23.1.0',
         'aiopath==0.6.11',
         'easyocr==1.7.0',
-        'Pillow==9.5.0',
+        'Pillow==10.0.1',
         'PyMuPDF==1.22.5',
         'python-pptx==0.6.21',
         'python-docx==0.8.11'
